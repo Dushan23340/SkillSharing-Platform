@@ -1,4 +1,4 @@
-package com.skill_sharing_platform;
+package com.skill_sharing_platform.skill_sharing_platform;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
