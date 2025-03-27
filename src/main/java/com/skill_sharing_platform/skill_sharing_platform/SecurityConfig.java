@@ -18,6 +18,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/auth/**").permitAll() // Allow API endpoints
                 .requestMatchers("/api/posts/**").permitAll()  // Allow public access
+                .requestMatchers("/api/learning-plans/**").permitAll() // Ensure proper authentication
                 .anyRequest().authenticated()
             )
             .formLogin().disable()
