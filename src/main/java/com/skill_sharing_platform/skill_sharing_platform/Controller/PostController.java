@@ -4,6 +4,8 @@ import com.skill_sharing_platform.skill_sharing_platform.Model.Post;
 import com.skill_sharing_platform.skill_sharing_platform.Services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import java.io.IOException;
 
 import java.util.List;
 import java.util.Optional;
@@ -39,4 +41,14 @@ public class PostController {
         postService.deletePost(id);
         return "Post deleted successfully";
     }
+
+    @PostMapping("/{userId}/upload")
+public String uploadFile(@PathVariable Long userId, @RequestParam("file") MultipartFile file) {
+    try {
+        return postService.uploadMedia(file);
+    } catch (IOException e) {
+        return "File upload failed: " + e.getMessage();
+    }
+}
+
 }

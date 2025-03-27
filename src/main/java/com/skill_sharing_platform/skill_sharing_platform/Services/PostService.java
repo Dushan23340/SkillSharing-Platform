@@ -1,6 +1,5 @@
 package com.skill_sharing_platform.skill_sharing_platform.Services;
 
-
 import com.skill_sharing_platform.skill_sharing_platform.Model.Post;
 import com.skill_sharing_platform.skill_sharing_platform.Model.User;
 import com.skill_sharing_platform.skill_sharing_platform.Repository.PostRepository;
@@ -10,6 +9,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import org.springframework.web.multipart.MultipartFile;
+import java.io.File;
+import java.io.IOException;
 
 @Service
 public class PostService {
@@ -45,5 +47,17 @@ public class PostService {
 
     public void deletePost(Long postId) {
         postRepository.deleteById(postId);
+    }
+
+    public String uploadMedia(MultipartFile file) throws IOException {
+        String uploadDir = "uploads/";
+        File uploadPath = new File(uploadDir);
+        if (!uploadPath.exists()) {
+            uploadPath.mkdirs();
+        }
+        
+        String filePath = uploadDir + file.getOriginalFilename();
+        file.transferTo(new File(filePath));
+        return filePath;
     }
 }
