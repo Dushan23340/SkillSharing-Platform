@@ -26,4 +26,8 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Post> posts;
+
+    public User(Long userId) {
+        this.id = userId; // Assuming 'id' is the field representing the user ID
+    }
 }

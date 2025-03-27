@@ -16,13 +16,14 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable()) // Disable CSRF
             .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/api/notifications/**").permitAll() // Allow public endpoints
                 .requestMatchers("/api/auth/**").permitAll() // Allow API endpoints
                 .requestMatchers("/api/posts/**").permitAll()  // Allow public access
                 .requestMatchers("/api/learning-plans/**").permitAll() // Ensure proper authentication
                 .anyRequest().authenticated()
             )
-            .formLogin().disable()
-            .httpBasic().disable()
+            .formLogin(form -> form.disable())
+            .httpBasic(httpBasic -> httpBasic.disable())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
             
 
