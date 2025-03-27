@@ -2,6 +2,8 @@ package com.skill_sharing_platform.skill_sharing_platform.Model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.util.List;
 
 @Entity
@@ -25,6 +27,7 @@ public class User {
     private String profilePicture;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference  // This is the "managed" side of the relationship
     private List<Post> posts;
 
     public User(Long userId) {

@@ -3,6 +3,7 @@ package com.skill_sharing_platform.skill_sharing_platform.Controller;
 import com.skill_sharing_platform.skill_sharing_platform.Model.Post;
 import com.skill_sharing_platform.skill_sharing_platform.Services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:5173") // Allow frontend to access backend
 @RequestMapping("/api/posts")
 public class PostController {
     @Autowired

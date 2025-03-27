@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:5173") // Allow frontend to access backend
 @RequestMapping("/api/notifications")
 public class NotificationController {
 
