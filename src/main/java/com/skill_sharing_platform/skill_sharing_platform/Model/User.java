@@ -1,36 +1,63 @@
 package com.skill_sharing_platform.skill_sharing_platform.Model;
 
-import jakarta.persistence.*;
-import lombok.*;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
-import java.util.List;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 
 @Entity
-@Table(name = "users")
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
-
-    @Column(nullable = false, unique = true)
+    private String username;
     private String email;
-
-    @Column(nullable = false)
-    private String name;
-
     private String password;
-    private String profilePicture;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonManagedReference  // This is the "managed" side of the relationship
-    private List<Post> posts;
+    public User(){
 
-    public User(Long userId) {
-        this.id = userId; // Assuming 'id' is the field representing the user ID
     }
+
+    public long getId(){
+        return id;
+
+    }
+
+    public void setId(long id){
+        this.id = id;
+
+    }
+
+    public String username(long id){
+        return username;
+    }
+
+    public void setusername(String username){
+        this.username = username;
+    }
+
+    public String getEmail(){
+        return email;
+    }
+
+    public void setEmail(String email){
+        this.email = email;
+    }
+
+    public String getPassword(){
+        return password;
+    }
+
+    public void setPassword(String password){
+        this.password = password;
+    }
+
+    public User(long id, String username, String email, String password){
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
+
+
+
 }

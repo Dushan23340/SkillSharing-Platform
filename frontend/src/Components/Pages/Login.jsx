@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";  // Import useNavigate
 import { motion } from "framer-motion";
 import { FaEnvelope, FaLock, FaCameraRetro } from "react-icons/fa";
+import axios from "axios";
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();  // Initialize useNavigate for redirect
 
   const validateForm = () => {
     let newErrors = {};
@@ -15,15 +17,28 @@ const Login = () => {
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length === 0) {
       setLoading(true);
-      setTimeout(() => {
-        alert("Login Successful! 🎉");
+
+      try {
+        const loginDetails = { email: formData.email, password: formData.password };
+        const response = await axios.post("http://localhost:8080/login", loginDetails);
+
+        if (response.data.id) {
+          localStorage.setItem("userId", response.data.id);
+          alert("Login successful!");
+          // Redirect to the home page after successful login
+          navigate("/userProfile"); // Change "/home" to the desired route
+        } else {
+          alert("Login failed!");
+        }
+      } catch (err) {
+        alert("Login failed! Please try again.");
         setLoading(false);
-      }, 2000);
+      }
     } else {
       setErrors(validationErrors);
     }
@@ -31,21 +46,12 @@ const Login = () => {
 
   return (
     <div className="flex flex-col md:flex-row h-screen w-screen bg-[#212121] text-white">
-      
       {/* LEFT SIDE - Background Video */}
       <div className="hidden md:flex md:w-1/2 h-full relative">
-      <video
-          autoPlay
-          loop
-          muted
-          className="absolute inset-0 w-full h-full object-cover"
-        >
+        <video autoPlay loop muted className="absolute inset-0 w-full h-full object-cover">
           <source src="/videos/login-video.mp4" type="video/mp4" />
         </video>
-        {/* Overlay for better contrast */}
         <div className="absolute inset-0 bg-black bg-opacity-50"></div>
-
-        {/* Text Overlay */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -61,8 +67,6 @@ const Login = () => {
       {/* RIGHT SIDE - Login Form */}
       <div className="w-full md:w-1/2 h-full flex items-center justify-center p-8">
         <div className="bg-[#1c1c1c] p-8 rounded-lg shadow-lg max-w-md w-full">
-          
-          {/* Logo & Heading */}
           <div className="flex flex-col items-center mb-6">
             <motion.div whileHover={{ rotate: [0, 10, -10, 0] }} className="text-[#009688] text-5xl">
               <FaCameraRetro />
@@ -73,8 +77,6 @@ const Login = () => {
 
           {/* Login Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
-            
-            {/* Email */}
             <div>
               <label className="block text-gray-300">Email</label>
               <div className="relative">
@@ -90,7 +92,6 @@ const Login = () => {
               {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
             </div>
 
-            {/* Password */}
             <div>
               <label className="block text-gray-300">Password</label>
               <div className="relative">
@@ -106,7 +107,6 @@ const Login = () => {
               {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
             </div>
 
-            {/* Login Button */}
             <motion.button
               type="submit"
               className="w-full px-6 py-3 bg-[#009688] text-white rounded-lg hover:bg-[#00796B] transition font-semibold flex items-center justify-center"
@@ -117,15 +117,12 @@ const Login = () => {
             </motion.button>
           </form>
 
-          {/* Forgot Password */}
           <p className="text-gray-400 text-center mt-3">
             <Link to="/forgot-password" className="text-[#009688] hover:underline">Forgot password?</Link>
           </p>
 
-          {/* OR Divider */}
           <div className="text-center my-4 text-gray-500 text-sm">— OR —</div>
 
-          {/* Don't Have an Account */}
           <p className="text-gray-400 text-center mt-4">
             Don't have an account?{" "}
             <Link to="/signup" className="text-[#009688] hover:underline">Sign Up</Link>
