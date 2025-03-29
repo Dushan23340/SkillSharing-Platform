@@ -12,6 +12,10 @@ public class User {
     private String username;
     private String email;
     private String password;
+    private String bio;
+    private String profilePicture;
+    private String coverImage;
+    private boolean isFollowing;
 
     public User(){
 
@@ -27,7 +31,7 @@ public class User {
 
     }
 
-    public String username(long id){
+    public String getusername(){
         return username;
     }
 
@@ -51,11 +55,50 @@ public class User {
         this.password = password;
     }
 
-    public User(long id, String username, String email, String password){
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    // Getter and Setter for profilePicture
+    public String getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(String profilePicture) {
+        this.profilePicture = profilePicture;
+    }
+
+    // Getter and Setter for coverImage
+    public String getCoverImage() {
+        return coverImage;
+    }
+
+    public void setCoverImage(String coverImage) {
+        this.coverImage = coverImage;
+    }
+
+    // Getter and Setter for isFollowing
+    public boolean isFollowing() {
+        return isFollowing;
+    }
+
+    public void setFollowing(boolean isFollowing) {
+        this.isFollowing = isFollowing;
+    }
+
+    public User(long id, String username, String email, String password, String bio, String profilePicture, String coverImage, boolean isFollowing){
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
+        this.bio = bio;
+        this.profilePicture = profilePicture;
+        this.coverImage = coverImage;
+        this.isFollowing = isFollowing;
     }
 
 
